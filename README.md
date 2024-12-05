@@ -48,3 +48,9 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## How to handle keeping the google-services.json file secure
+
+(https://stackoverflow.com/questions/78301058/expo-push-notifications-google-services-json-is-missing-for-firebase)
+
+eas secret:create --scope project --name GOOGLE_SERVICES_JSON --type file --value ./google-services.json
