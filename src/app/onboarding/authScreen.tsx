@@ -1,6 +1,7 @@
 // Import necessary libraries and components
 import React, { useState } from "react";
 import { router, Stack } from "expo-router";
+import { ToastAndroid } from 'react-native';
 import { useForm } from "react-hook-form"; // For form state management
 import { yupResolver } from "@hookform/resolvers/yup"; // Integration of react-hook-form with Yup for validation
 import * as yup from "yup"; // Validation schema builder
@@ -52,6 +53,15 @@ export default function AuthScreen() {
     resolver: yupResolver(SignInSignUpSchema(isSignUp)), // Dynamic schema resolver
   });
 
+  function showSignUpSuccessToast() {
+    ToastAndroid.show('Signed up successfully!', ToastAndroid.SHORT);
+  }
+  
+  function showSignInSuccessToast() {
+    ToastAndroid.show('Signed in successfully!', ToastAndroid.SHORT);
+  }
+  
+
   /**
    * Handles form submission for both Sign-In and Sign-Up actions.
    * @param {Object} data - Form data containing email, password, and confirmPassword (if sign-up).
@@ -68,22 +78,14 @@ export default function AuthScreen() {
         console.log("Sign-up successful:", JSON.stringify(user, null, 2));
         router.push("/(tabs)");
         // Display success toast notification
-        Toast.show({
-          type: "success",
-          text1: "Account Created!",
-          text2: "You can now sign in to your account.",
-        });
+       showSignUpSuccessToast()
       } else {
         // Sign-In logic
         const user = await signInWithEmailPassword(data.email, data.password);
         console.log("Sign-in successful:", JSON.stringify(user, null, 2));
         router.push("/(tabs)");
         // Display success toast notification
-        Toast.show({
-          type: "success",
-          text1: "Welcome Back!",
-          text2: "You have successfully signed in.",
-        });
+       showSignInSuccessToast()
       }
       // Redirect to the home or another screen after success (not implemented here)
     } catch (error: any) {

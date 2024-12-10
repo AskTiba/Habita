@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import { ThemedText } from "@components/ThemedText";
 import { ThemedView } from "@components/ThemedView";
 import Button from "@components/Button";
+("@react-native-google-signin/google-signin");
 
 export default function Welcome() {
   return (
@@ -17,6 +18,9 @@ export default function Welcome() {
         asChild
       >
         <Button className="" title="Sign up" />
+      </Link>
+      <Link className="" href={{ pathname: "/onboarding/authScreen" }} asChild>
+        <Button className="" title="Continue with Google" />
       </Link>
     </ThemedView>
   );

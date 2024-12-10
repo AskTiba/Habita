@@ -34,7 +34,7 @@ export default function RootLayout() {
   // Listen to Firebase auth state changes
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
-      console.log("Auth State Changed:", JSON.stringify(authUser, null, 2));
+      // console.log("Auth State Changed:", JSON.stringify(authUser, null, 2));
       setUser(authUser);
     });
     return unsubscribe; // Clean up the listener
