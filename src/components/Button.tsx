@@ -63,7 +63,7 @@ const Button = forwardRef<TouchableOpacity, ButtonProps>(
     ref
   ) => {
     const getButtonStyles = () => {
-      const baseStyles = "rounded-[12px] items-center justify-center";
+      const baseStyles = "rounded-lg items-center justify-center";
 
       const variantStyles = {
         primary: theme?.primary || "bg-tangerine active:bg-[#543310]",

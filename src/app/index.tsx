@@ -1,9 +1,26 @@
 import React from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { ThemedText } from "@components/ThemedText";
 import { ThemedView } from "@components/ThemedView";
 import Button from "@components/Button";
-("@react-native-google-signin/google-signin");
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
+import { signIn } from "../services/signin";
+
+GoogleSignin.configure({
+  webClientId: process.env.EXPO_PUBLIC_WEBCLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+  scopes: ["https://www.googleapis.com/auth/drive.readonly"], // what API you want to access on behalf of the user, default is email and profile
+  offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+  forceCodeForRefreshToken: false, // [Android] related to `serverAuthCode`, read the docs link below *.
+});
+
+const handleSignInWithGoogle = () => {
+  signIn();
+  () => router.push("/onboarding/authScreen");
+};
 
 export default function Welcome() {
   return (
@@ -19,8 +36,8 @@ export default function Welcome() {
       >
         <Button className="" title="Sign up" />
       </Link>
-      <Link className="" href={{ pathname: "/onboarding/authScreen" }} asChild>
-        <Button className="" title="Continue with Google" />
+      <Link className="" href={{ pathname: "/onboarding/mapbox" }} asChild>
+        <Button className="" onPress={signIn} title="Continue with Google" />
       </Link>
     </ThemedView>
   );
