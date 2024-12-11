@@ -54,3 +54,16 @@ Join our community of developers creating universal apps.
 (https://stackoverflow.com/questions/78301058/expo-push-notifications-google-services-json-is-missing-for-firebase)
 
 eas secret:create --scope project --name GOOGLE_SERVICES_JSON --type file --value ./google-services.json
+
+```TypeScript
+import dayjs from "dayjs";
+
+const lastSignInTime = 1733957127790;
+const creationTime = 1733858123097;
+
+const formattedLastSignIn = dayjs(lastSignInTime).format("YYYY-MM-DD HH:mm:ss");
+const formattedCreationTime = dayjs(creationTime).format("YYYY-MM-DD HH:mm:ss");
+
+console.log("Last Sign-In Time:", formattedLastSignIn);
+console.log("Account Creation Time:", formattedCreationTime);
+```

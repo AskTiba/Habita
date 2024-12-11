@@ -26,15 +26,12 @@ export default function Welcome() {
   return (
     <ThemedView className="flex-1 justify-center px-4">
       <ThemedText className="text-center my-4">Welcome</ThemedText>
-      <Link className="" href={{ pathname: "/onboarding" }} asChild>
-        <Button className="" title="Welcome" />
-      </Link>
       <Link
         className="my-4"
         href={{ pathname: "/onboarding/authScreen" }}
         asChild
       >
-        <Button className="" title="Sign up" />
+        <Button className="" title="Continue with Email" />
       </Link>
       <Link className="" href={{ pathname: "/onboarding/mapbox" }} asChild>
         <Button className="" onPress={signIn} title="Continue with Google" />
