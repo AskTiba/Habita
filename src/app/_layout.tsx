@@ -13,10 +13,41 @@ import { useColorScheme } from "@hooks/useColorScheme";
 import "react-native-reanimated"; // Ensure it is installed
 import "@/global.css"; // Global CSS
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { StreamChat } from "stream-chat";
+import { OverlayProvider, Chat } from "stream-chat-expo";
+import {
+  StreamCall,
+  StreamVideo,
+  StreamVideoClient,
+  User,
+} from "@stream-io/video-react-sdk";
 
-console.log("API Key:", process.env.EXPO_PUBLICAPI_KEY);
-const client = StreamChat.getInstance(process.env.EXPO_PUBLIC_STREAM_API_KEY!);
+import { StreamChat } from "stream-chat";
+import { NotificationProvider } from "@context/NotificationContext";
+import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
+
+const apiKey = process.env.EXPO_PUBLIC_STREAM_API_KEY!;
+const chatClient = StreamChat.getInstance(apiKey);
+
+const userId = "john";
+const token = chatClient.devToken("john");
+
+const user: User = {
+  id: "john",
+  name: "John Doe",
+  image: "https://getstream.io/random_svg/?id=john&name=John%20Doe",
+};
+
+const videoClient = new StreamVideoClient({ apiKey, user, token });
+const call = videoClient.call("default", "my-first-call");
+call.join({ create: true });
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -32,16 +63,16 @@ export default function RootLayout() {
   useEffect(() => {
     const setupClient = async () => {
       try {
-        await client.connectUser(
+        await chatClient.connectUser(
           {
             id: "john",
             name: "John Doe",
             image: "https://getstream.io/random_svg/?id=john&name=John%20Doe",
           },
-          client.devToken("john")
+          chatClient.devToken("john")
         );
 
-        const channel = client.channel("messaging", "the_park", {
+        const channel = chatClient.channel("messaging", "the_park", {
           name: "The Park",
         });
         await channel.watch();
@@ -54,7 +85,7 @@ export default function RootLayout() {
     setupClient();
 
     return () => {
-      client.disconnectUser();
+      chatClient.disconnectUser();
     };
   }, []);
 
@@ -82,12 +113,23 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          {/* <Stack.Screen name="not-found" /> */}
-        </Stack>
-        <StatusBar style="auto" />
+        <NotificationProvider>
+          <OverlayProvider bottomInset={20}>
+            <Chat client={chatClient}>
+              <StreamVideo client={videoClient}>
+                <Stack>
+                  <Stack.Screen name="index" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  {/* <Stack.Screen name="not-found" /> */}
+                </Stack>
+                <StatusBar style="auto" />
+              </StreamVideo>
+            </Chat>
+          </OverlayProvider>
+        </NotificationProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

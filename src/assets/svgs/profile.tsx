@@ -1,5 +1,5 @@
 import * as React from "react";
-import Svg, { Path, Circle, Rect, SvgProps } from "react-native-svg";
+import Svg, { Circle, Path, SvgProps } from "react-native-svg";
 const Profile = (props: SvgProps) => (
   <Svg
     width={24}
@@ -10,12 +10,12 @@ const Profile = (props: SvgProps) => (
     strokeWidth={2}
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="lucide lucide-square-user-round"
+    className="lucide lucide-circle-user"
     {...props}
   >
-    <Path d="M18 21a6 6 0 0 0-12 0" />
-    <Circle cx={12} cy={11} r={4} />
-    <Rect width={18} height={18} x={3} y={3} rx={2} />
+    <Circle cx={12} cy={12} r={10} />
+    <Circle cx={12} cy={10} r={3} />
+    <Path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
   </Svg>
 );
 export default Profile;

@@ -15,14 +15,13 @@ const getUniqueIdentifier = () => {
 };
 const getAppName = () => {
   if (IS_DEV) {
-    return "Habita (Dev)";
+    return "Habita";
   }
   if (IS_PREVIEW) {
     return "Habita (Preview)";
   }
-  return "Habita";
+  return "Habita (final";
 };
-
 
 module.exports = {
   expo: {
@@ -52,6 +51,13 @@ module.exports = {
     },
     plugins: [
       "expo-router",
+      [
+        "expo-av",
+        {
+          microphonePermission:
+            "Allow $(PRODUCT_NAME) to access your microphone.",
+        },
+      ],
       ["expo-build-properties"],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",

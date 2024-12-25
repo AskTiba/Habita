@@ -76,14 +76,14 @@ export default function AuthScreen() {
         // Sign-Up logic
         const user = await signUpWithEmailPassword(data.email, data.password);
         console.log("Sign-up successful:", JSON.stringify(user, null, 2));
-        router.push("/(tabs)");
+        router.push("/(tabs)/browse");
         // Display success toast notification
        showSignUpSuccessToast()
       } else {
         // Sign-In logic
         const user = await signInWithEmailPassword(data.email, data.password);
         console.log("Sign-in successful:", JSON.stringify(user, null, 2));
-        router.push("/(tabs)");
+        router.push("/(tabs)/browse");
         // Display success toast notification
        showSignInSuccessToast()
       }
