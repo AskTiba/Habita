@@ -2,15 +2,16 @@ import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import React from "react";
 import * as Notifications from "expo-notifications";
-import { Button } from "react-native/Libraries/Components/Button";
+import Button from "@/src/components/Button";
 
 export default function Wishlist() {
   return (
     <ThemedView className="flex-1">
       <Button
+        className="mx-4"
         title="Schedule test notifications"
         onPress={schedulePushNotification}
-      />{" "}
+      />
     </ThemedView>
   );
 }

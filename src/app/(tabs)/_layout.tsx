@@ -43,7 +43,7 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: "Chat",
-          tabBarStyle: { display: "none" },
+          // tabBarStyle: { display: "none" },
           tabBarIcon: ({ color, size }) => (
             <Message color={color} />
           ),
